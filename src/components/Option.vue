@@ -9,13 +9,17 @@
 import { defineComponent, getCurrentInstance, ref, onMounted } from "vue";
 import * as echarts from "echarts";
 import axios from "axios";
+import { TitleComponent, TooltipComponent } from "echarts/components";
+import { ScatterChart, EffectScatterChart } from "echarts/charts";
+import { UniversalTransition } from "echarts/features";
+import { CanvasRenderer } from "echarts/renderers";
 
 export default {
   name: "Option",
   setup() {
-    const { ctx } = getCurrentInstance();
-    const url = "china.json"
     const echartsInit = () => {
+      const url = "china.json";
+
       const chartDom = document.getElementById("mycharts");
       const myChart = echarts.init(chartDom);
       var option;
@@ -23,18 +27,19 @@ export default {
       myChart.showLoading();
 
       axios({
-        url:  url,
+        url: url,
         method: "get",
         crossdomain: true,
       }).then((res) => {
-        console.log(res)
+        console.log(res);
         myChart.hideLoading();
-        echarts.registerMap("China", res.data, {});
+        echarts.registerMap("china", res.data, {
+        });
         option = {
           title: {
-            text: "USA Population Estimates (2012)",
-            subtext: "Data from www.census.gov",
-            sublink: "http://www.census.gov/popest/data/datasets.html",
+            text: "期权询价分布",
+            // subtext: "Data from www.census.gov",
+            // sublink: "http://www.census.gov/popest/data/datasets.html",
             left: "right",
           },
           tooltip: {
@@ -87,19 +92,19 @@ export default {
           },
           series: [
             {
-              name: "USA PopEstimates",
+              name: "Option Query",
               type: "map",
               roam: true,
-              map: "USA",
+              map: "china",
               emphasis: {
                 label: {
                   show: true,
                 },
               },
               data: [
-                { name: "Alabama", value: 4822023 },
-                { name: "Alaska", value: 731449 },
-                { name: "Arizona", value: 6553255 },
+                { name: "青海省", value: 4822023 },
+                { name: "新疆维吾尔自治区", value: 731449 },
+                { name: "黑龙江省", value: 6553255 },
                 { name: "Arkansas", value: 2949131 },
                 { name: "California", value: 38041430 },
                 { name: "Colorado", value: 5187582 },
@@ -121,34 +126,6 @@ export default {
                 { name: "Massachusetts", value: 6646144 },
                 { name: "Michigan", value: 9883360 },
                 { name: "Minnesota", value: 5379139 },
-                { name: "Mississippi", value: 2984926 },
-                { name: "Missouri", value: 6021988 },
-                { name: "Montana", value: 1005141 },
-                { name: "Nebraska", value: 1855525 },
-                { name: "Nevada", value: 2758931 },
-                { name: "New Hampshire", value: 1320718 },
-                { name: "New Jersey", value: 8864590 },
-                { name: "New Mexico", value: 2085538 },
-                { name: "New York", value: 19570261 },
-                { name: "North Carolina", value: 9752073 },
-                { name: "North Dakota", value: 699628 },
-                { name: "Ohio", value: 11544225 },
-                { name: "Oklahoma", value: 3814820 },
-                { name: "Oregon", value: 3899353 },
-                { name: "Pennsylvania", value: 12763536 },
-                { name: "Rhode Island", value: 1050292 },
-                { name: "South Carolina", value: 4723723 },
-                { name: "South Dakota", value: 833354 },
-                { name: "Tennessee", value: 6456243 },
-                { name: "Texas", value: 26059203 },
-                { name: "Utah", value: 2855287 },
-                { name: "Vermont", value: 626011 },
-                { name: "Virginia", value: 8185867 },
-                { name: "Washington", value: 6897012 },
-                { name: "West Virginia", value: 1855413 },
-                { name: "Wisconsin", value: 5726398 },
-                { name: "Wyoming", value: 576412 },
-                { name: "Puerto Rico", value: 3667084 },
               ],
             },
           ],
@@ -161,7 +138,6 @@ export default {
     });
     return {
       echartsInit,
-      ctx,
     };
   },
 };
