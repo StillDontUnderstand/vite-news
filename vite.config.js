@@ -4,6 +4,7 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   plugins: [vue()],
   server: {
+    host: '0.0.0.0',	// ← 新增内容 ←
     proxy: {
       // 字符串简写写法
       '/api': {
