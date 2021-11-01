@@ -12,8 +12,8 @@ export default {
   name: "USA",
   setup() {
     const { ctx } = getCurrentInstance();
-    const url = "gh/apache/echarts-website@asf-site/examples/data/asset/geo/USA.json"
     const echartsInit = () => {
+      const url = "gh/apache/echarts-website@asf-site/examples/data/asset/geo/USA.json"
       const chartDom = document.getElementById("mycharts");
       const myChart = echarts.init(chartDom);
       var option;

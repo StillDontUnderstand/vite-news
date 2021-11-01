@@ -18,23 +18,14 @@ export default {
   name: "Option",
   setup() {
     const echartsInit = () => {
-      const url = "china.json";
-
       const chartDom = document.getElementById("mycharts");
       const myChart = echarts.init(chartDom);
       var option;
-
+      var data;
       myChart.showLoading();
-
       axios({
-        url: url,
-        method: "get",
-        crossdomain: true,
+        url: "api/option",
       }).then((res) => {
-        console.log(res);
-        myChart.hideLoading();
-        echarts.registerMap("china", res.data, {
-        });
         option = {
           title: {
             text: "期权询价分布",
@@ -101,35 +92,44 @@ export default {
                   show: true,
                 },
               },
-              data: [
-                { name: "青海省", value: 4822023 },
-                { name: "新疆维吾尔自治区", value: 731449 },
-                { name: "黑龙江省", value: 6553255 },
-                { name: "Arkansas", value: 2949131 },
-                { name: "California", value: 38041430 },
-                { name: "Colorado", value: 5187582 },
-                { name: "Connecticut", value: 3590347 },
-                { name: "Delaware", value: 917092 },
-                { name: "District of Columbia", value: 632323 },
-                { name: "Florida", value: 19317568 },
-                { name: "Georgia", value: 9919945 },
-                { name: "Hawaii", value: 1392313 },
-                { name: "Idaho", value: 1595728 },
-                { name: "Illinois", value: 12875255 },
-                { name: "Indiana", value: 6537334 },
-                { name: "Iowa", value: 3074186 },
-                { name: "Kansas", value: 2885905 },
-                { name: "Kentucky", value: 4380415 },
-                { name: "Louisiana", value: 4601893 },
-                { name: "Maine", value: 1329192 },
-                { name: "Maryland", value: 5884563 },
-                { name: "Massachusetts", value: 6646144 },
-                { name: "Michigan", value: 9883360 },
-                { name: "Minnesota", value: 5379139 },
-              ],
+              data:res.data.statustic,
+              // data: [
+              //   { name: "青海省", value: 4822023 },
+              //   { name: "新疆维吾尔自治区", value: 731449 },
+              //   { name: "黑龙江省", value: 6553255 },
+              //   { name: "Arkansas", value: 2949131 },
+              //   { name: "California", value: 38041430 },
+              //   { name: "Colorado", value: 5187582 },
+              //   { name: "Connecticut", value: 3590347 },
+              //   { name: "Delaware", value: 917092 },
+              //   { name: "District of Columbia", value: 632323 },
+              //   { name: "Florida", value: 19317568 },
+              //   { name: "Georgia", value: 9919945 },
+              //   { name: "Hawaii", value: 1392313 },
+              //   { name: "Idaho", value: 1595728 },
+              //   { name: "Illinois", value: 12875255 },
+              //   { name: "Indiana", value: 6537334 },
+              //   { name: "Iowa", value: 3074186 },
+              //   { name: "Kansas", value: 2885905 },
+              //   { name: "Kentucky", value: 4380415 },
+              //   { name: "Louisiana", value: 4601893 },
+              //   { name: "Maine", value: 1329192 },
+              //   { name: "Maryland", value: 5884563 },
+              //   { name: "Massachusetts", value: 6646144 },
+              //   { name: "Michigan", value: 9883360 },
+              //   { name: "Minnesota", value: 5379139 },
+              // ],
             },
           ],
         };
+      });
+      axios({
+        url: "china.json",
+        method: "get",
+        crossdomain: true,
+      }).then((res) => {
+        myChart.hideLoading();
+        echarts.registerMap("china", res.data, {});
         option && myChart.setOption(option);
       });
     };
