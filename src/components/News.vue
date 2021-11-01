@@ -85,6 +85,7 @@ import draggable from "vuedraggable";
 import { ref } from "vue";
 import { message } from "ant-design-vue";
 import Previews from "./Previews.vue";
+import axios from "axios";
 
 export default {
   name: "News",
@@ -149,7 +150,7 @@ export default {
       console.log(this);
       const source_url = "api/news_list" + "/" + this.news_source;
       console.log(source_url);
-      this.axios({
+      axios({
         url: source_url,
         method: "get",
         crossdomain: true,
@@ -160,7 +161,7 @@ export default {
       });
     },
     // draw_pic() {
-    //   this.axios({
+    //   axios({
     //     url: /draw_pid,
     //     method: "get",
     //     crossdomain: true,
@@ -172,7 +173,7 @@ export default {
     // },
     extractNews() {
       this.loading = true;
-      this.axios({
+      axios({
         url: "api/extract_news",
         method: "get",
         crossdomain: true,
@@ -185,7 +186,7 @@ export default {
     },
     getAutoNews() {
       const topic_url = "api/auto_news" + "/" + this.news_topic;
-      this.axios({
+      axios({
         url: topic_url,
         method: "get",
         crossdomain: true,

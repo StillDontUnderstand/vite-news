@@ -3,9 +3,10 @@ import {createWebHistory,createRouter} from "vue-router";
 import News from '../components/News.vue';
 import Model from '../components/Model.vue';
 import Option from '../components/Option.vue';
+import USA from '../components/USA.vue';
 
 const routes = [
-    { path: "/", redirect: "/model" },
+    { path: "/", redirect: "/news" },
     {
         path: '/news',
         name:'news',
@@ -20,6 +21,11 @@ const routes = [
         path: '/option',
         name:'Option',
         component: Option
+    },
+    {
+        path: '/usa',
+        name:'USA',
+        component: USA
     },
 ]
 

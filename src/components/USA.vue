@@ -1,7 +1,5 @@
 <template>
-  <!-- <h1 style="text-align: center">Option</h1> -->
   <div id="mycharts" style="height: 800px; width: 100%"></div>
-  <!-- <a-button type="primary" :loading="loading" @click="test()">获取新闻</a-button> -->
 </template>
 <style>
 </style>
@@ -11,10 +9,10 @@ import * as echarts from "echarts";
 import axios from "axios";
 
 export default {
-  name: "Option",
+  name: "USA",
   setup() {
     const { ctx } = getCurrentInstance();
-    const url = "china.json"
+    const url = "gh/apache/echarts-website@asf-site/examples/data/asset/geo/USA.json"
     const echartsInit = () => {
       const chartDom = document.getElementById("mycharts");
       const myChart = echarts.init(chartDom);
@@ -23,13 +21,31 @@ export default {
       myChart.showLoading();
 
       axios({
-        url:  url,
+        url: "apache/" + url,
         method: "get",
         crossdomain: true,
       }).then((res) => {
         console.log(res)
         myChart.hideLoading();
-        echarts.registerMap("China", res.data, {});
+        echarts.registerMap("USA", res.data, {
+          Alaska: {
+            // 把阿拉斯加移到美国主大陆左下方
+            left: -131,
+            top: 25,
+            width: 15,
+          },
+          Hawaii: {
+            left: -110,
+            top: 28,
+            width: 5,
+          },
+          "Puerto Rico": {
+            // 波多黎各
+            left: -76,
+            top: 26,
+            width: 2,
+          },
+        });
         option = {
           title: {
             text: "USA Population Estimates (2012)",
