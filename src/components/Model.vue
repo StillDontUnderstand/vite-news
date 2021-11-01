@@ -1,7 +1,8 @@
 <template>
-  <h1 style="text-align: center">Model</h1>
-
-  <div id="mycharts" style="height: 800px; width: 100%"></div>
+  <h1 style="text-align: center">USD/CNY 汇率预测模型</h1>
+  <!-- TODO 多模型切换 -->
+  <div id="mycharts" style="height: 1000px; width: 100%"></div>
+  <!-- TODO 邮件发送 -->
 </template>
 <style>
 </style>
@@ -99,9 +100,9 @@ export default {
         ],
         title: [
           {
-            top: "3%",
+            top: "45%",
             left: "center",
-            text: "USD/CNY 汇率预测模型",
+            text: "1、由于宏观经济更新频率低、且具有明显的滞后性，为提高日度模型的准确性，我们现阶段主要采取传统的时间序列模型ARIMA对USDCNY市场走势进行日度预测。\n2、考虑到汇率波动具有明显的异方差性，我们同时加入GARCH波动率预测模型对ARIMA进行进一步拟合优化。",
           },
           //   {
           //     top: "55%",
@@ -116,7 +117,10 @@ export default {
           feature: {
             dataView: { show: true, readOnly: false },
             restore: { show: true },
-            saveAsImage: { show: true },
+            saveAsImage: {
+              show: true,
+              pixelRatio: 3,
+            },
           },
         },
         tooltip: {
@@ -179,6 +183,24 @@ export default {
             type: "line",
             showSymbol: true,
             data: valueList,
+            endLabel: {
+              show: true,
+              color: colors[0],
+              fontSize: 16,
+            },
+            labelLayout: {
+              moveOverlap: "shiftY",
+            },
+            emphasis: {
+              focus: "series",
+            },
+            encode: {
+              x: "Year",
+              y: "FX_RATE",
+              label: ["Country", "FX_RATE"],
+              itemName: "Year",
+              tooltip: ["FX_RATE"],
+            },
           },
           {
             name: "predicted",
@@ -191,6 +213,11 @@ export default {
               2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2,
               2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2,
             ],
+            endLabel: {
+              show: true,
+              color: colors[1],
+              fontSize: 16,
+            },
           },
           {
             name: "difference",
