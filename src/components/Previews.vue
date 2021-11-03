@@ -193,6 +193,7 @@ import CaretRightOutlined from "@ant-design/icons-vue/CaretRightOutlined";
 import { ref } from "vue";
 import { message } from "ant-design-vue";
 import fileDownload from "js-file-download";
+import axios from "axios";
 
 export default {
   name: "Previews",
