@@ -264,7 +264,7 @@ export default {
         foreignNews: this.list3,
         importantEvent: this.list4,
       };
-      this.axios({
+      axios({
         url: "api/put_selected_news",
         method: "post",
         crossdomain: true,
@@ -277,7 +277,7 @@ export default {
       });
     },
     generate_label() {
-      this.axios({
+      axios({
         url: "api/generate_label",
         method: "get",
         crossdomain: true,
@@ -291,7 +291,7 @@ export default {
       this.loading = ref(true);
       var todayDate = new Date();
       // console.log(todayDate.toISOString().split("T")[0])
-      this.axios({
+      axios({
         url: "api/download",
         method: "get",
         responseType: 'blob',
