@@ -3,12 +3,15 @@
   <!-- TODO 多模型切换 -->
   <div id="mycharts" style="height: 1000px; width: 100%"></div>
   <!-- TODO 邮件发送 -->
+  <div>12345</div>
+  <a-button @click="daymodel()">showdata</a-button>
 </template>
 <style>
 </style>
 <script>
 import * as echarts from "echarts";
 import { defineComponent, ref, onMounted } from "vue";
+import axios from "axios";
 
 export default {
   name: "Model",
@@ -138,8 +141,8 @@ export default {
           {
             type: "value",
             name: "USD/CNY",
-            min: 0.0,
-            max: 400.0,
+            min: 6.2,
+            max: 6.6,
             position: "right",
             axisLine: {
               show: true,
@@ -154,8 +157,8 @@ export default {
           {
             type: "value",
             name: "Difference",
-            min: 0,
-            max: 10000,
+            min: -1000,
+            max: 1000,
             position: "left",
             offset: 0,
             axisLine: {
@@ -182,7 +185,8 @@ export default {
             name: "real",
             type: "line",
             showSymbol: true,
-            data: valueList,
+            // data: valueList,
+            data: [],
             endLabel: {
               show: true,
               color: colors[0],
@@ -235,15 +239,58 @@ export default {
           },
         ],
       };
+      axios({
+        url: "api/daymodel",
+        method: "get",
+        crossdomain: true,
+      }).then((res) => {
+        if (res.status == 200) {
+          const temp = JSON.parse(res.data);
+          temp.Origin.pop();
+          console.log(temp)
+          // const predict = temp.ARIMA
+          const predict = temp.ARIMA_GARCH
 
-      option && myChart.setOption(option);
+          option.series[0].data = temp.Origin;
+          option.series[1].data = predict;
+          // option.series[2].data = temp.ARIMA_GARCH;
+
+          const diffArray = (arr1, arr2) =>
+            arr1.map(function (num, idx) {
+              return (num - arr2[idx])*10000;
+            });
+
+          const diff = diffArray(predict, temp.Origin);
+          console.log(diff)
+          option.series[2].data = diff;
+
+          option.xAxis[0].data = temp.date;
+
+          option && myChart.setOption(option);
+        }
+      });
     };
+
     onMounted(() => {
       echartsInit();
     });
     return {
       echartsInit,
     };
+  },
+  data() {
+    return {
+      // alldata:[],
+      date_list: [],
+      origin_list: [],
+      arima_list: [],
+      garch_list: [],
+      drag: false,
+      loading: false,
+    };
+  },
+  methods: {
+    daymodel() {},
   },
 };
 </script>

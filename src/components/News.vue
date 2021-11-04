@@ -22,6 +22,7 @@
             <a-select-option value="Bloomberg"> 彭博 </a-select-option>
             <a-select-option value="wind"> wind </a-select-option>
             <a-select-option value="xinhua"> 新华财经 </a-select-option>
+            <a-select-option value="zzzs"> 债市综述 </a-select-option>
           </a-select>
         </div>
         <div style="padding-left: 30px">
